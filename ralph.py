@@ -9,10 +9,10 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT: pygame.quit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT: felix.left()
-                if event.key == pygame.K_RIGHT: felix.right()
-                if event.key == pygame.K_UP: felix.up()
-                if event.key == pygame.K_DOWN: felix.down() 
+                if event.key in [pygame.K_LEFT, pygame.K_a] : felix.left()
+                if event.key in [pygame.K_RIGHT, pygame.K_d]: felix.right()
+                if event.key in [pygame.K_UP, pygame.K_w]: felix.up()
+                if event.key in [pygame.K_DOWN, pygame.K_s]: felix.down() 
         background = pygame.image.load('images/background.jpg')
         screen.blit(background,(0,0))
         felix.draw(screen)
