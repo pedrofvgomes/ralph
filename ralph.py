@@ -28,44 +28,55 @@ def main():
 
 class Felix:
     def __init__(self):
-        self.x = 0
-        self.y = 0
+        self.x = 170
+        self.y = 384
+        self.status = 'standing'
     def left(self):
-        if self.x > 0 : self.x -= 1
+        # start moving
+        if self.status == 'standing' and self.x >= 170:
+            self.status = 'jumping left'
     def right(self):
-        if self.x < 4 : self.x += 1
+        if self.status == 'standing' and self.x <= 409:
+            self.status = 'jumping right'
     def up(self):
         if self.y < 2 : self.y += 1
     def down(self):
         if self.y > 0 : self.y -= 1
     def draw(self, screen):
-        # x values
-        if self.x == 0:
-            drawx = 170
-        if self.x == 1:
-            drawx = 237
-        if self.x == 2:
-            drawx = 309
-        if self.x == 3:
-            drawx = 382
-        if self.x == 4:
-            drawx = 449
+        if self.status == 'jumping left':
+            self.x-=1
+            if (self.x > 170 and self.x < 203.5) or (self.x > 382 and self.x < 415.5):
+                self.y+=0.5
+            if (self.x > 203.5 and self.x < 237) or (self.x > 415.5 and self.x < 449):
+                self.y-=0.5
+            if self.x in [245,249,253,257,261,265,269,273,277,281,285,289,293,297,301,305]:
+                self.y-=1
+            if self.x in [313,317,321,325,329,333,337,341,345,349,353,357,361,365,369,373]:
+                self.y+=1
+        if self.status == 'jumping right':
+            self.x+=1
+            if (self.x > 170 and self.x < 203.5) or (self.x > 382 and self.x < 415.5):
+                self.y-=0.5
+            if (self.x > 203.5 and self.x < 237) or (self.x > 415.5 and self.x < 449):
+                self.y+=0.5
+            if self.x in [245,249,253,257,261,265,269,273,277,281,285,289,293,297,301,305]:
+                self.y+=1
+            if self.x in [313,317,321,325,329,333,337,341,345,349,353,357,361,365,369,373]:
+                self.y-=1
 
-        # y values (a slight difference when he's on the doorway or balcony)
-
-        if self.y == 0:
-            drawy = 384
-            if self.x == 2:
-                drawy = 400
-        if self.y == 1:
-            drawy = 263
-            if self.x == 2:
-                drawy = 271
-        if self.y == 2:
-            drawy = 141
+        # standing positions
+        if (self.x, self.y) in [(170,384), (170,263), (170,141), (237,384), (237,263), (237,141), (309,400), (309,271), (309,141), (382,384), (382,263), (382,141), (449,384), (449,263), (449,141)]:
+            self.status = 'standing'
 
 
-        screen.blit(pygame.image.load('images/felix.png'), (drawx, drawy))
+        if self.status == 'standing':
+            icon = pygame.image.load('images/felix_standing.png')
+        if self.status == 'jumping left':
+            icon = pygame.image.load('images/felix_jumping_left.png')
+        if self.status == 'jumping right':
+            icon = pygame.image.load('images/felix_jumping_right.png')
+    
+        screen.blit(icon, (self.x, self.y))
 
 class Cloud:
     def __init__(self, y):
