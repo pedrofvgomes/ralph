@@ -16,7 +16,11 @@ def main():
                 if event.key in [pygame.K_UP, pygame.K_w]: felix.up()
                 if event.key in [pygame.K_DOWN, pygame.K_s]: felix.down()
         screen.fill((0,0,0))
-        for cloud in clouds: cloud.draw(screen)
+        for cloud in clouds:
+            if cloud.visible: cloud.draw(screen)
+            else:
+                cloud.spawn()
+
         screen.blit(pygame.image.load('images/background.png'),(0,0))
         felix.draw(screen)
         pygame.display.flip()
@@ -67,9 +71,24 @@ class Cloud:
         self.visible = False
         self.x = 0       
         self.y = y
+        self.velocity = 0
+    def spawn(self):
+        n = random.randrange(0,2)
+        self.visible = True
+        if n==0: 
+            self.x = -200
+            self.velocity = 0.5
+        else: 
+            self.x = 850
+            self.velocity = -0.5
+        self.velocity*= random.randrange(1,5)
+
     def draw(self, screen):
         screen.blit(pygame.image.load('images/cloud.png'), (self.x, self.y))
-        self.x = self.x + 2
+        self.x = self.x + self.velocity
+        if self.x > 850 or self.x < -200:
+            self.velocity = 0
+            self.visible = False
 
 
 main()
