@@ -4,6 +4,8 @@ import random
 def main():
     pygame.init()
     screen = pygame.display.set_mode((680,480))
+    pygame.display.set_caption('Fix-It Felix Jr.')
+    pygame.display.set_icon(pygame.image.load('images/icon.jpg'))
     felix = Felix()
     running = True
     clouds = [Cloud(40), Cloud(140), Cloud(240)]
