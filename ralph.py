@@ -19,7 +19,8 @@ def main():
         for cloud in clouds:
             if cloud.visible: cloud.draw(screen)
             else:
-                cloud.spawn()
+                n = random.randrange(0,500)
+                if n==0: cloud.spawn()
 
         screen.blit(pygame.image.load('images/background.png'),(0,0))
         felix.draw(screen)
