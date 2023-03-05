@@ -30,6 +30,7 @@ class Felix:
     def __init__(self):
         self.x = 0
         self.y = 0
+        self.icon = pygame.image.load('images/felix_standing.png')
     def left(self):
         if self.x > 0 : self.x -= 1
     def right(self):
@@ -64,8 +65,7 @@ class Felix:
         if self.y == 2:
             drawy = 141
 
-
-        screen.blit(pygame.image.load('images/felix.png'), (drawx, drawy))
+        screen.blit(self.icon, (drawx, drawy))
 
 class Cloud:
     def __init__(self, y):
